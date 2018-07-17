@@ -5,12 +5,12 @@ class ContactsController < ApplicationController
   def index
     @contacts = Contact.all
 
-    render json: @contacts
+    render json: @contacts #, methods: :birthday_br
   end
 
   # GET /contacts/1
   def show
-    render json: @contact
+    render json: @contact#, include: :Kind
   end
 
   # POST /contacts
@@ -46,6 +46,6 @@ class ContactsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contact_params
-      params.require(:contact).permit(:name, :email, :birthday)
+      params.require(:contact).permit(:name, :email, :birthday, :kind_id)
     end
 end
