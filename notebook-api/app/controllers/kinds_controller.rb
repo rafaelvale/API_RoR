@@ -1,4 +1,5 @@
 class KindsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_kind, only: [:show, :update, :destroy]
 
   # GET /kinds
@@ -41,6 +42,11 @@ class KindsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_kind
+      if params[:contact_id]
+        @kind  = Contact.find(params[:contact_id]).kind
+        return @Kind
+      end
+
       @kind = Kind.find(params[:id])
     end
 
@@ -48,4 +54,7 @@ class KindsController < ApplicationController
     def kind_params
       params.require(:kind).permit(:description)
     end
+
+  
+    
 end
